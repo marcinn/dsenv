@@ -7,7 +7,8 @@
 ![GitHub Stars](https://img.shields.io/github/stars/marcinn/dsenv)
 ![License](https://img.shields.io/github/license/marcinn/dsenv)
 
-Damn Simple Environment Variables loader.
+Damn Simple Environment Variables loader for Python.
+Supports Python 3.7 and newer.
 
 ## Install
 
