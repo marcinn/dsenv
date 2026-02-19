@@ -41,5 +41,5 @@ test = ["pytest>=7.0"]
 dev = ["tox>=4.0", "twine>=4.0"]
 
 [tool.pytest.ini_options]
-addopts = "-ra"
+addopts = "-ra --import-mode=prepend"
 testpaths = ["tests"]

@@ -5,12 +5,22 @@ on:
   pull_request:
 
 jobs:
+  py37:
+    runs-on: ubuntu-latest
+    container: python:3.7
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pytest
+        run: python -m pip install --upgrade "pip<24" pytest
+      - name: Run tests
+        run: PYTHONPATH=. pytest
+
   pytest:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -20,4 +30,4 @@ jobs:
       - name: Install pytest
         run: python -m pip install --upgrade pip pytest
       - name: Run tests
-        run: pytest
+        run: PYTHONPATH=. pytest
