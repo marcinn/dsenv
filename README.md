@@ -25,7 +25,7 @@ from dsenv import load_env
 load_env()
 
 # Load from a custom path
-load_env("./.env", override=False)
+load_env("./.env", override_env=False)
 ```
 
 ## Supported .env Syntax
@@ -46,6 +46,14 @@ Or use tox (if you have multiple Python versions installed):
 ```bash
 tox
 ```
+
+## TODO
+
+- Add more parser behavior tests (especially edge cases) before changing parsing rules.
+- Expand support for escape sequences in quoted values (starting with double quotes).
+- Refine comment parsing edge cases (quoted vs unquoted values, `#` handling).
+- Evaluate multiline values support.
+- Evaluate variable interpolation support.
 
 ## License
 
