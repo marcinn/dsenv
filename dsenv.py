@@ -16,7 +16,7 @@ def parse_envfile(buffer: io.TextIOBase) -> dict:
             continue
 
         if line.startswith("export "):
-            line = line.split("export")[1].strip()
+            line = line[len("export ") :].strip()
 
         if "=" not in line:
             continue
@@ -24,6 +24,8 @@ def parse_envfile(buffer: io.TextIOBase) -> dict:
         key, value = line.split("=", 1)
         key = key.strip()
         if not key:
+            continue
+        if any(ch.isspace() for ch in key):
             continue
         value = value.strip()
 
@@ -42,10 +44,29 @@ def parse_envfile(buffer: io.TextIOBase) -> dict:
     return data
 
 
-def load_env(path: str = "~/.env", override: bool = False) -> None:
+def load_env(path: str = "~/.env", override_env: bool = False) -> None:
     full_path = os.path.expanduser(path)
     with open(full_path, "r") as buf:
         data = parse_envfile(buf)
         for key, value in data.items():
-            if key not in os.environ or override:
+            if key not in os.environ or override_env:
                 os.environ[key] = value
+
+
+def load_merged_envs(*files: str, override_env: bool = False) -> None:
+    merged = {}
+
+    for path in files:
+        if not path:
+            continue
+
+        full_path = os.path.expanduser(path)
+        if not os.path.exists(full_path):
+            continue
+
+        with open(full_path, "r") as buf:
+            merged.update(parse_envfile(buf))
+
+    for key, value in merged.items():
+        if key not in os.environ or override_env:
+            os.environ[key] = value

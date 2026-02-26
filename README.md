@@ -19,13 +19,22 @@ pip install dsenv
 ## Usage
 
 ```python
-from dsenv import load_env
+from dsenv import load_env, load_merged_envs
 
 # Load from ~/.env
 load_env()
 
 # Load from a custom path
-load_env("./.env", override=False)
+load_env("./.env", override_env=False)
+
+# Force override values already present in the environment
+load_env("./.env", override_env=True)
+
+# Merge multiple env files (later files win), but keep existing process env vars
+load_merged_envs(".env", ".env.local", override_env=False)
+
+# Merge multiple env files and override existing process env vars
+load_merged_envs(".env", ".env.local", override_env=True)
 ```
 
 ## Supported .env Syntax
@@ -46,6 +55,14 @@ Or use tox (if you have multiple Python versions installed):
 ```bash
 tox
 ```
+
+## TODO
+
+- Add more parser behavior tests (especially edge cases) before changing parsing rules.
+- Expand support for escape sequences in quoted values (starting with double quotes).
+- Refine comment parsing edge cases (quoted vs unquoted values, `#` handling).
+- Evaluate multiline values support.
+- Evaluate variable interpolation support.
 
 ## License
 
