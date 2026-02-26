@@ -1,0 +1,12 @@
+exclude Makefile
+exclude requirements-dev.txt
+exclude AGENTS.md
+
+prune tests
+prune .github
+prune .pytest_cache
+prune __pycache__
+prune .env
+prune .tox
+
+global-exclude *.py[cod]
